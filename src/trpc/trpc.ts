@@ -23,3 +23,4 @@ const isAuth = middleware(async (opts) => {
 export const router = t.router
 export const publicProcedure = t.procedure
 export const privateProcedure = t.procedure.use(isAuth)
+
