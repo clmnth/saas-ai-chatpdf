@@ -10,14 +10,19 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 
 const Dashboard = () => {
+
+  // State for tracking the file currently being deleted
   const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<
     string | null
   >(null);
 
+  // Accessing the trpc context
   const utils = trpc.useContext();
 
+  // Fetching user files using trpc hook
   const { data: files, isLoading } = trpc.getUserFiles.useQuery();
 
+  // Mutation hook for deleting a file
   const { mutate: deleteFile } = trpc.deleteFile.useMutation({
     onSuccess: () => {
       utils.getUserFiles.invalidate();
