@@ -4,8 +4,8 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { pinecone } from "@/lib/pinecone";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
+import { pinecone } from "@/lib/pinecone";
 
 const f = createUploadthing();
 
@@ -38,7 +38,6 @@ export const ourFileRouter = {
         },
       });
       console.log("Upload complete for userId:", metadata.userId);
-
       console.log("file url", file.url);
 
       try {
@@ -54,18 +53,21 @@ export const ourFileRouter = {
         const pagesAmt = pageLevelDocs.length;
 
         // vectorize and index entire document
-
+        
         const pineconeIndex = pinecone.Index("chatpdf");
 
         const embeddings = new OpenAIEmbeddings({
           openAIApiKey: process.env.OPENAI_API_KEY,
         });
 
-        await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
-          //@ts-ignore
-          pinecodeIndex,
-          namespace: createdFile.id,
-        });
+        await PineconeStore.fromDocuments(
+          pageLevelDocs, 
+          embeddings, 
+          {
+            pineconeIndex,
+            // namespace: createdFile.id,
+          }
+        );
 
         await db.file.update({
           data: {
