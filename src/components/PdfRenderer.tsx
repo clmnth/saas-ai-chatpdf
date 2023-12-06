@@ -163,7 +163,7 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
       </div>
 
       <div className="flex-1 w-full max-h-screen">
-        <SimpleBar autoHide={false} className="mx-h-[calc(100vh-10rem)]">
+        <SimpleBar className="mx-h-[calc(100vh-10rem)]">
           <div ref={ref}>
             <Document
               loading={
@@ -193,7 +193,7 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
               ) : null}
 
               <Page
-              className={cn(isLoading ? "hidden" : "")}
+                className={cn(isLoading ? "hidden" : "")}
                 width={width ? width : 1}
                 pageNumber={currPage}
                 scale={scale}
@@ -201,16 +201,16 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
                 key={"@" + scale}
                 loading={
                   <div className="flex justify-center">
-                    <Loader2 className="my-24 h-6 w-6 animate-spin"/>
+                    <Loader2 className="my-24 h-6 w-6 animate-spin" />
                   </div>
                 }
                 onRenderSuccess={() => setRenderedScale(scale)}
               />
-
             </Document>
           </div>
         </SimpleBar>
       </div>
+
     </div>
   );
 };
