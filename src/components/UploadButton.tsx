@@ -105,7 +105,7 @@ const UploadDropZone = () => {
               {acceptedFiles && acceptedFiles[0] ? (
                 <div className="max-w-xs bg-white flex items-center rounded-md overflow-hidden outline-[1px] outline-zinc-200 divide-x divide-zinc-200">
                   <div className="px-3 py-2 h-full grid place-items-center">
-                    <File className="h-4 w-4 text-red-500" />
+                    <File className="h-4 w-4 text-blue-500" />
                   </div>
                   <div className="px-3 py-2 h-full text-sm truncate">
                     {acceptedFiles[0].name}
@@ -117,9 +117,7 @@ const UploadDropZone = () => {
                 <div className="w-full mt-4 max-w-xs mx-auto">
                   <Progress
                     indicatorColor={
-                      uploadProgress === 100 
-                        ? "bg-green-500" 
-                        : ""
+                      uploadProgress === 100 ? "bg-green-500" : ""
                     }
                     value={uploadProgress}
                     className="h-1 w-full bg-zinc-200"

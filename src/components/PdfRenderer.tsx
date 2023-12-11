@@ -98,7 +98,7 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
               {...register("page")}
               className={cn(
                 "w-12 h-8",
-                errors.page && "focus-visible:ring-red-500"
+                errors.page && "focus-visible:ring-blue-500"
               )}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -210,7 +210,6 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
           </div>
         </SimpleBar>
       </div>
-
     </div>
   );
 };
