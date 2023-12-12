@@ -49,7 +49,7 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
             <p className="text-zinc-500 text-sm">This won&apos;t take long.</p>
           </div>
         </div>
-        <ChatInput isDisabled />
+        <ChatInput  />
       </div>
     );
 
@@ -76,7 +76,7 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
             </Link>
           </div>
         </div>
-        <ChatInput isDisabled />
+        <ChatInput  />
       </div>
     );
 
@@ -94,3 +94,4 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
 };
 
 export default ChatWrapper;
+

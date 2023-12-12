@@ -19,22 +19,21 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="light">
+    <html lang='en' className='light'>
       <Providers>
         <body
           className={cn(
-            "min-h-screen font-sans antialiased grainy",
+            'min-h-screen font-sans antialiased grainy',
             inter.className
-          )}
-        >
+          )}>
           <Toaster />
           <Navbar />
           {children}
         </body>
       </Providers>
     </html>
-  );
+  )
 }
