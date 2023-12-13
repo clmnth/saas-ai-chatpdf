@@ -204,7 +204,12 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
                     <Loader2 className="my-24 h-6 w-6 animate-spin" />
                   </div>
                 }
-                onRenderSuccess={() => setRenderedScale(scale)}
+                onRenderSuccess={() => {
+                  console.log(
+                    `Page ${currPage} rendered successfully at scale ${scale}`
+                  );
+                  setRenderedScale(scale);
+                }}
               />
             </Document>
           </div>
@@ -215,4 +220,3 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
 };
 
 export default PdfRenderer;
-
