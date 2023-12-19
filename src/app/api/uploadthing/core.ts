@@ -6,6 +6,9 @@ import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { pinecone } from "@/lib/pinecone";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { PLANS } from "@/config/stripe";
+import { UploadStatus } from "@prisma/client";
 
 const f = createUploadthing();
 
@@ -23,8 +26,10 @@ export const ourFileRouter = {
       // If you throw, the user will not be able to upload
       if (!user || !user.id) throw new Error("Unauthorized");
 
+      const subscriptionPlan = await getUserSubscriptionPlan();
+
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.id };
+      return { subscriptionPlan, userId: user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
@@ -50,24 +55,45 @@ export const ourFileRouter = {
 
         const pageLevelDocs = await loader.load();
 
+        // file uploading?
         const pagesAmt = pageLevelDocs.length;
 
+        // enforcing upload restrictions for free and pro plans
+        const { subscriptionPlan } = metadata;
+        const { isSubscribed } = subscriptionPlan;
+
+        const isProExceeded =
+          pagesAmt > PLANS.find((plan) => plan.name === "Pro")!.pagesPerPdf;
+        const isFreeExceeded =
+          pagesAmt > PLANS.find((plan) => plan.name === "Free")!.pagesPerPdf;
+
+        if (
+          (isSubscribed && isProExceeded) ||
+          (!isSubscribed && isFreeExceeded) ||
+          (!isSubscribed && isFreeExceeded)
+        ) {
+          await db.file.update({
+            data: {
+              uploadStatus: "FAILED",
+            },
+            where: {
+              id: createdFile.id,
+            },
+          });
+        }
+
         // vectorize and index entire document
-        
+
         const pineconeIndex = pinecone.Index("chatpdf");
 
         const embeddings = new OpenAIEmbeddings({
           openAIApiKey: process.env.OPENAI_API_KEY,
         });
 
-        await PineconeStore.fromDocuments(
-          pageLevelDocs, 
-          embeddings, 
-          {
-            pineconeIndex,
-            // namespace: createdFile.id,
-          }
-        );
+        await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
+          pineconeIndex,
+          // namespace: createdFile.id,
+        });
 
         await db.file.update({
           data: {
