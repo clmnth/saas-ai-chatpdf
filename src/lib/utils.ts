@@ -46,7 +46,7 @@ export function constructMetadata({
     },
     icons,
     metadataBase: new URL("http://localhost:3000/"),
-    themeColor: "#FFF",
+    
     ...(noIndex && {
       robots: {
         index: false,
