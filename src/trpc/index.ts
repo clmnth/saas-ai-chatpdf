@@ -47,7 +47,6 @@ export const appRouter = router({
     });
   }),
 
- 
   createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
     const { userId } = ctx;
 
@@ -83,15 +82,15 @@ export const appRouter = router({
       line_items: [
         {
           price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds.test,
-          quantity: 1
+          quantity: 1,
         },
       ],
       metadata: {
-        userId: userId
-      }
+        userId: userId,
+      },
     });
 
-    return { url: stripeSession.url }
+    return { url: stripeSession.url };
   }),
 
   // Get messages associated with a specific file using an infinite query pattern

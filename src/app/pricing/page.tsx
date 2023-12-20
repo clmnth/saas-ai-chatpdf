@@ -85,7 +85,7 @@ const Page = () => {
 
         <div className="pt-12 grid grid-cols-1 gap-10 lg:grid-cols-2">
           <TooltipProvider>
-            {pricingItems.map(({ plan, tagline, quota, features }) => {
+            {pricingItems.map(async ({ plan, tagline, quota, features }) => {
               const price =
                 PLANS.find((p) => p.slug === plan.toLowerCase())?.price
                   .amount || 0;
@@ -174,13 +174,13 @@ const Page = () => {
                   <div className="p-5">
                     {plan === "Free" ? (
                       <Link
-                        href={user ? "/dashboard" : "/sign-in"}
+                        href={await user ? "/dashboard" : "/sign-in"}
                         className={buttonVariants({
                           className: "w-full",
                           variant: "secondary",
                         })}
                       ></Link>
-                    ) : user ? (
+                    ) : await user ? (
                       <UpgradeButton />
                     ) : (
                       <Link
@@ -189,7 +189,7 @@ const Page = () => {
                           className: "w-full",
                         })}
                       >
-                        {user ? "Upgrade now" : "Sign up"}
+                        {await user ? "Upgrade now" : "Sign up"}
                         <ArrowRight className="h-5 w-5 ml-1.5" />
                       </Link>
                     )}
