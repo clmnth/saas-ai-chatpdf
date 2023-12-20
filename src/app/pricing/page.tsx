@@ -174,13 +174,14 @@ const Page = () => {
                   <div className="p-5">
                     {plan === "Free" ? (
                       <Link
-                        href={await user ? "/dashboard" : "/sign-in"}
+                        href={(await user) ? "/dashboard" : "/sign-in"}
                         className={buttonVariants({
                           className: "w-full",
                           variant: "secondary",
                         })}
-                      ></Link>
-                    ) : await user ? (
+                      > {user ? 'Upgrade now' : 'Sign up'}
+                      <ArrowRight className='h-5 w-5 ml-1.5' /></Link>
+                    ) : (await user) ? (
                       <UpgradeButton />
                     ) : (
                       <Link
@@ -189,7 +190,7 @@ const Page = () => {
                           className: "w-full",
                         })}
                       >
-                        {await user ? "Upgrade now" : "Sign up"}
+                        {(await user) ? "Upgrade now" : "Sign up"}
                         <ArrowRight className="h-5 w-5 ml-1.5" />
                       </Link>
                     )}
@@ -205,5 +206,3 @@ const Page = () => {
 };
 
 export default Page;
-
-
