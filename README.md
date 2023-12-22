@@ -4,6 +4,10 @@ Advanced SaaS AI Chat with PDF using Next.js 13, React, Prisma, tRPC, Tailwind.
 
 It follows the tutorial made by [Josh tried coding](https://www.youtube.com/@joshtriedcoding). The YouTube video can be found [here](https://www.youtube.com/watch?v=ucX2zXAZ1I0). Harness the power of AI to extract information, answer questions, and gain deeper understanding from your PDFs effortlessly.
 
+## Screenshot
+
+![chat with pdf app screenshot](chat-with-pdf-screenshot.png)
+
 ## Features
 
 - **Complete SaaS Built From Scratch**: Crafted meticulously for optimal performance and scalability.
